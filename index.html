@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f0f0f;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a0a0a0;
+            --accent: #d4af37;
+            --accent-dim: #8b7355;
+            --border: #2a2a2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Serif 4', serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Animated background texture */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 4rem 0 2rem;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 4rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .name-section h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .tagline {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .contact-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .contact-links a:hover {
+            color: var(--accent);
+        }
+
+        .contact-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Bio Section */
+        .bio-section {
+            margin-bottom: 5rem;
+            animation: fadeIn 1s ease-out 0.2s both;
+        }
+
+        .bio-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .bio-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            line-height: 1.8;
+        }
+
+        /* Papers Section */
+        .papers-section {
+            margin-bottom: 5rem;
+            animation: fadeIn 1s ease-out 0.4s both;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .section-count {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent-dim);
+        }
+
+        .papers-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .paper-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .paper-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .paper-card:hover::before {
+            left: 100%;
+        }
+
+        .paper-card:hover {
+            border-color: var(--accent-dim);
+            transform: translateY(-2px);
+        }
+
+        .paper-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .paper-year, .paper-type {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .paper-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .paper-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .paper-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .paper-link {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-decoration: none;
+            padding: 0.5rem 1.25rem;
+            border: 1px solid var(--accent-dim);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .paper-link:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            margin-top: 5rem;
+            text-align: center;
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+
+        footer p {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .name-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+            }
+
+            .section-header h2 {
+                font-size: 1.75rem;
+            }
+
+            .paper-title {
+                font-size: 1.25rem;
+            }
+
+            .container {
+                padding: 0 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="name-section">
+                    <h1>Your Name</h1>
+                    <p class="tagline">Researcher · Writer · Scholar</p>
+                </div>
+                <div class="contact-links">
+                    <a href="mailto:your.email@example.com">Email</a>
+                    <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+                    <a href="https://scholar.google.com/yourprofile" target="_blank">Google Scholar</a>
+                    <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </header>
+
+        <section class="bio-section">
+            <h2>About</h2>
+            <p>
+                Write a compelling bio here that highlights your research interests, academic background, 
+                and professional experience. This section should give visitors a clear sense of who you are 
+                and what you work on. Keep it concise but informative, focusing on your unique contributions 
+                and areas of expertise.
+            </p>
+        </section>
+
+        <section class="papers-section">
+            <div class="section-header">
+                <h2>Publications & Papers</h2>
+                <span class="section-count">(3)</span>
+            </div>
+            
+            <div class="papers-grid">
+                <!-- Paper 1 -->
+                <article class="paper-card">
+                    <div class="paper-meta">
+                        <span class="paper-year">2024</span>
+                        <span class="paper-type">Research Paper</span>
+                    </div>
+                    <h3 class="paper-title">Your First Paper Title Goes Here</h3>
+                    <p class="paper-description">
+                        A brief description of what this paper is about. Include key findings, methodologies, 
+                        or the main contribution of the work. Keep it accessible and engaging for readers who 
+                        may not be experts in your specific field.
+                    </p>
+                    <div class="paper-links">
+                        <a href="#" class="paper-link">Read Paper</a>
+                        <a href="#" class="paper-link">Download PDF</a>
+                    </div>
+                </article>
+
+                <!-- Paper 2 -->
+                <article class="paper-card">
+                    <div class="paper-meta">
+                        <span class="paper-year">2023</span>
+                        <span class="paper-type">Conference Paper</span>
+                    </div>
+                    <h3 class="paper-title">Your Second Paper Title Goes Here</h3>
+                    <p class="paper-description">
+                        Another brief description explaining the significance of this work. Mention any awards, 
+                        conferences where it was presented, or notable recognition it received. Highlight what 
+                        makes this research important or innovative.
+                    </p>
+                    <div class="paper-links">
+                        <a href="#" class="paper-link">Read Paper</a>
+                        <a href="#" class="paper-link">Download PDF</a>
+                    </div>
+                </article>
+
+                <!-- Paper 3 -->
+                <article class="paper-card">
+                    <div class="paper-meta">
+                        <span class="paper-year">2023</span>
+                        <span class="paper-type">Journal Article</span>
+                    </div>
+                    <h3 class="paper-title">Your Third Paper Title Goes Here</h3>
+                    <p class="paper-description">
+                        Describe the focus and impact of this publication. What problem does it address? 
+                        What solutions or insights does it provide? Help readers understand why this work 
+                        matters in your field.
+                    </p>
+                    <div class="paper-links">
+                        <a href="#" class="paper-link">Read Paper</a>
+                        <a href="#" class="paper-link">Download PDF</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2025 Your Name. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>
